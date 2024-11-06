@@ -3,7 +3,7 @@ import re
 
 def ctd_br(senha):
     original = senha['crack_times_display']
-    texto = {'online_throttling_100_per_hour' : 'Ataque online com limitação de tentativas (100 tentativas por hora):','online_no_throttling_10_per_second' : 'Ataque online sem limitação de tentativas (10 tentativas por segundo):','offline_slow_hashing_1e4_per_second' : 'Ataque offline com proteção de hashing lento (10.000 tentativas por segundo):','offline_fast_hashing_1e10_per_second' : 'Ataque offline com hashing rápido (10 bilhões de tentativas por segundo):'} 
+    texto = {"online_throttling_100_per_hour" : "Ataque online com limitação de tentativas (100 tentativas por hora):" , "online_no_throttling_10_per_second" : "Ataque online sem limitação de tentativas (10 tentativas por segundo):" , "offline_slow_hashing_1e4_per_second" : "Ataque offline com proteção de hashing lento (10.000 tentativas por segundo):" , "offline_fast_hashing_1e10_per_second" : "Ataque offline com hashing rápido (10 bilhões de tentativas por segundo):"} 
     traduz = [texto[a] for a in original]
     return traduz
 
@@ -32,11 +32,20 @@ def fbw_br(senha):
         return 'Nenhum aviso a acrescentar'
     else:
         return original['warning']
+
 def fbs_br(senha):
     original = senha['feedback']
     texto = {"Use a longer keyboard pattern with more turns.": "Use um padrão de teclado mais longo com mais voltas.", "Use a few words, avoid common phrases.": "Use algumas palavras, evite frases comuns", "Add another word or two. Uncommon words are better.": "Adicione mais uma ou duas palavras. Palavras incomuns são melhores.", "Avoid repeated words and characters.": "Evite palavras e caracteres repetidos", "Avoid sequences.": "Evite sequências", "Avoid recent years": "Evite usar anos recentes.", "Avoid years that are associated with you.": "Evite anos que estejam associados a você", "Avoid dates and years that are associated with you.": "Evite datas e anos que estejam associados a você", "Use more characters.": "Use mais caracteres", "Add a symbol, number, or uppercase letter.": "Adicione um símbolo, número ou letra maiúscula", "Add another word or two.": "Adicione mais uma ou duas palavras", "Uncommon words are better.": "Palavras incomuns são melhores", "Capitalization doesn't help very much.": "Capitalização não ajuda muito", "All-uppercase is almost as easy to guess as all-lowercase": "Tudo em maiúsculas é quase tão fácil de adivinhar quanto tudo em minúsculas", "Reversed words aren't much harder to guess.": "Palavras invertidas não são muito mais difíceis de adivinhar", "Predictable substitutions like '@' instead of 'a' don't help very much.": "Substituições previsíveis como '@' em vez de 'a' não ajudam muito"}
-    traduz = [texto[a] for a in original['suggestions']]
+    traduz = []
+    for s in original['suggestions']:
+        if s in texto:
+            traduz.append(texto[s])
+        else:
+            traduz.append(s)    
     if len(traduz) >= 1:
         return traduz
     else:
         return 'Nenhuma sugestão a acrescentar.'
+
+
+

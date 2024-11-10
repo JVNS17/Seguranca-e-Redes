@@ -7,9 +7,9 @@ def verificador():
     
     while True:
         try:
-            print('\nVerificador de senhas 1.1 by JVNS17')
+            print('\nVerificador de senhas 1.2 by JVNS17')
             print('\n Qual tipo de verificação você deseja?')
-            print('1.Simples (Força da senha + Checar se ela foi exposta em algum Data Breach)', '\n2.Normal (Simples + Tentativas para quebrar senha +  Tempo necessário em diferentes cenários)', '\n3.Detalhada (Normal + Complexidade da senha + Avisos e Sugestões para a senha)')
+            print('1. Simples (Força da senha + Checar se ela foi exposta em algum Data Breach)', '\n2. Normal (Simples + Tentativas para quebrar a senha +  Tempo necessário em diferentes cenários)', '\n3. Detalhada (Normal + Complexidade da senha + Avisos e sugestões para a senha)')
             num = int(input())
             if num in [1,2,3]:
                 senha = getpass('\nDigite a sua senha:')

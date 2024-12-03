@@ -4,7 +4,7 @@ import re
 from threading import Thread
 
 def validar_ip():
-    print("Scanner de portas by JVNS17 1.0\n")
+    print("Scanner de portas by JVNS17 1.1\n")
     endereco = input("Digite o endereço de domínio/ip para escanear:")
     try:
         if ipadd.ip_address(endereco):
@@ -37,10 +37,11 @@ def escolher_porta(endereco):
                         portas.append(int(n))
 
                 if tipo == 1:
-                     return escanear_porta(endereco, portas, tipo)
+                     return iniciar_threads(endereco, portas)
                 elif tipo == 2:
                     if len(numeros) == 2 and numeros == sorted(numeros):
-                        return escanear_porta(endereco, portas, tipo)    
+                        portas = list(range(portas[0], portas[1]+1))
+                        return iniciar_threads(endereco, portas)    
                     else:
                         print("Formatação incorreta.")
                         break
@@ -90,5 +91,3 @@ def iniciar_threads(endereco, portas):
 
 if __name__ == '__main__':
     validar_ip()        
-
-    

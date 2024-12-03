@@ -1,6 +1,7 @@
 import socket
 import ipaddress as ipadd
 import re 
+from threading import Thread
 
 def validar_ip():
     print("Scanner de portas by JVNS17 1.0\n")
@@ -30,7 +31,7 @@ def escolher_porta(endereco):
                 portas = []
                 for n in numeros:
                     if int(n) > 65535:
-                        print(f"A porta {n} é inválida")
+                        print(f"A porta {n} é inválida.")
                         break
                     else:
                         portas.append(int(n))
@@ -41,7 +42,7 @@ def escolher_porta(endereco):
                     if len(numeros) == 2 and numeros == sorted(numeros):
                         return escanear_porta(endereco, portas, tipo)    
                     else:
-                        print("Formatação incorreta")
+                        print("Formatação incorreta.")
                         break
                 
             
@@ -53,40 +54,39 @@ def escolher_porta(endereco):
         print("Caractere inválido.")
 
 
-def escanear_porta(endereco, portas, tipo):
+def escanear_porta(endereco, porta):
     try:
-        if tipo == 1:
-            for p in portas:
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock.settimeout(1)
-                resultado = sock.connect_ex((endereco, p))
-                
-                if resultado == 0:
-                    print(f"Porta {p} aberta")
-                else:
-                    print(f"Porta {p} fechada")
-                sock.close()
-        else:
-            for p in range(portas[0], portas[1]+1):
-                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock.settimeout(1)
-                resultado = sock.connect_ex((endereco, p))
-                
-                if resultado == 0:
-                    print(f"Porta {p} aberta")
-                else:
-                    print(f"Porta {p} fechada")
-                sock.close()
-            
         
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(1)
+        resultado = sock.connect_ex((endereco, porta))
+        if resultado == 0:
+            print(f"Porta {porta} aberta")
+        
+        else:
+            print(f"Porta {porta} fechada")
+        sock.close()
+            
+                    
     except Exception as e:
-        print(f"Erro na porta {portas}: {e}")
+        print(f"Erro ao escanear porta {porta}: {e}")
+            
 
 
-
-
-
-
+def iniciar_threads(endereco, portas):
+    
+    threads = []
+    for porta in portas:
+        
+        thread = Thread(target=escanear_porta, args=(endereco, porta))
+        threads.append(thread)
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
+        
+    print(f'Escaneamento concluído!')        
+    
 
 if __name__ == '__main__':
     validar_ip()        

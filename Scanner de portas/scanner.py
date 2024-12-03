@@ -39,7 +39,7 @@ def escolher_porta(endereco):
                 if tipo == 1:
                      return iniciar_threads(endereco, portas)
                 elif tipo == 2:
-                    if len(numeros) == 2 and numeros == sorted(numeros):
+                    if len(portas) == 2 and portas == sorted(portas):
                         portas = list(range(portas[0], portas[1]+1))
                         return iniciar_threads(endereco, portas)    
                     else:

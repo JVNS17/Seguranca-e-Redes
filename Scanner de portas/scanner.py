@@ -31,8 +31,8 @@ def escolher_porta(endereco):
                 portas = []
                 for n in numeros:
                     if int(n) > 65535:
-                        print(f"A porta {n} é inválida.")
-                        break
+                        return print(f"A porta {n} é inválida. Digite portas entre 0 e 65535.")
+                        
                     else:
                         portas.append(int(n))
 
